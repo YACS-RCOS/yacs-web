@@ -13,11 +13,14 @@ import { CourseListModule } from './course-list/module';
 import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
+import { AlertModule } from 'ngx-bootstrap';
+
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
     MaterialModule,
+    AlertModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
