@@ -1,16 +1,27 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 10px;">
 	<div class="container-fluid">
-	<div class="navbar-header">
-    <a class="navbar-brand" href="#">
-      <a href="/">YACS <span class="sub">beta</span> </a>
-    </a>
-  </div>
-  <!--<a href="/">YACS <span class="sub">beta</span> </a>-->
-  <div id="searchcontainer">
-    <img src="/assets/images/search.svg" style="width:50px">
-    <input placeholder="Search Fall 2017">
-  </div>
-  <a href="/schedules">Schedules</a>
+		<div class="navbar-header">
+	    <a class="navbar-brand" href="#">
+	      <a href="/">YACS <span class="sub">beta</span> </a>
+	    </a>
+	  </div>
+	  <!--<a href="/">YACS <span class="sub">beta</span> </a>-->
+	  <form class="navbar-form navbar-nav" role="search">
+		  <div class="form-group" id="searchcontainer">
+		  	<img src="/assets/images/search.svg" style="width:50px">
+		    <input type="text" class="form-control" placeholder="Search Fall 2017">
+		  </div>
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form>
+
+	  <!--<div id="searchcontainer">
+	    <img src="/assets/images/search.svg" style="width:50px">
+	    <input placeholder="Search Fall 2017">
+	  </div>-->
+	  <div class="nav navbar-nav navbar-right">
+	  	<a href="/schedules">Schedules</a>
+	  </div>
   </div>
 </nav>
+
 
