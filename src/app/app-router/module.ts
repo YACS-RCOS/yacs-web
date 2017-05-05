@@ -4,6 +4,7 @@ import { SchoolListComponent } from '../school-list/component';
 import { CourseListComponent } from '../course-list/component';
 import { ScheduleViewComponent } from '../schedule-view/component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/schools', pathMatch: 'full' },
   { path: 'schools', component: SchoolListComponent },
@@ -13,7 +14,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes)
     ],
     exports: [ RouterModule ]
 })

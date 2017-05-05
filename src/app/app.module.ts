@@ -13,9 +13,11 @@ import { CourseListModule } from './course-list/module';
 import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
   imports: [
+    MaterialModule,
     BrowserModule,
     FormsModule,
     HttpModule,
