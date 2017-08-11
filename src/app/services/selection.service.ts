@@ -11,7 +11,7 @@ export class SelectionService {
   }
 
   public addSection(section : Section) {
-    let store = this.getSelections() || {};
+    let store = this.getSelections();
     store[section.course_id] = store[section.course_id] || [];
     if (store[section.course_id].includes(section.id)) return false;
     store[section.course_id].push(section.id);
@@ -21,7 +21,7 @@ export class SelectionService {
   }
 
   public removeSection(section : Section) {
-    let store = this.getSelections() || {};
+    let store = this.getSelections();
     if (!store[section.course_id] || !store[section.course_id].includes(section.id)) return false;
     store[section.course_id].splice(store[section.course_id].indexOf(section.id), 1);
     if (store[section.course_id].length == 0) {
@@ -56,6 +56,6 @@ export class SelectionService {
   }
 
   public getSelections() {
-    return JSON.parse(localStorage.getItem('selections'));
+    return JSON.parse(localStorage.getItem('selections')) || {};
   }
 }
