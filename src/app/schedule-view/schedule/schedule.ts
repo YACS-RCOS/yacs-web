@@ -1,4 +1,4 @@
-import { SchedulePeriod } from './scheduleperiod';
+import { ScheduleEvent } from '../scheduleevent/scheduleevent';
 
 export class Schedule {
   // these times are in minutes since midnight
@@ -8,17 +8,23 @@ export class Schedule {
   earliestDay: number;
   latestDay: number;
 
-  periods: SchedulePeriod[];
+  height: number;
 
-  // arrays of day numbers and hour numbers
-  // needed because ngFor must iterate over a container
+  periods: ScheduleEvent[];
+
   dayNums: number[];
   hourNums: number[];
+
+  colors: string[];
+  text_colors: string[];
+  border_colors: string[];
+  percents: number[];
+  
 
   constructor(
     earliestStart: number,
     latestEnd: number,
-    periods: SchedulePeriod[]
+    periods: ScheduleEvent[]
   ) {
     this.periods = periods;
 
@@ -30,11 +36,19 @@ export class Schedule {
     this.earliestDay = 1;
     this.latestDay = 5;
 
+    this.height = 600;
+
+    this.colors = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7','#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7','#ffd4df', '#ceeffc'];
+    this.text_colors = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
+    this.border_colors = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
+    this.percents = [480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140];
+
     this.dayNums = [];
     for(let i=this.earliestDay; i<=this.latestDay; ++i) {
       this.dayNums.push(i);
     }
     this.hourNums = [];
+    console.log(latestEnd);
     for(let i=this.earliestStart; i<this.latestEnd; i+=60) {
       this.hourNums.push(i);
     }
@@ -50,12 +64,6 @@ export class Schedule {
     return this.latestEnd - this.earliestStart;
   }
   /* Return the percentage width of a day. */
-  public get getDayWidth(): number {
-    return (100 / this.getDaySpan);
-  }
-
-  public get getHourHeight(){
-    return (60 * 100 / this.getTimeSpan);
-  }
+  
 
 }

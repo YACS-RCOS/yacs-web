@@ -1,3 +1,5 @@
+<div *ngIf="!isLoaded" class="loader"></div>
+<div *ngIf="isLoaded">
 <div class="schedule-view">
   <div class="schedule-menu">
     <div class="left">
@@ -12,11 +14,11 @@
     </div>
     <div class="right">
       <div class="schedule-status">
-        {{status}}
+        {{crns}}
       </div>
     </div>
   </div>
-  <schedule [schedule]="currentSchedule"></schedule>
+  <schedule [schedule]="schedules[0]"></schedule>
   <course-list [courses]="courses"></course-list>
 </div>
 
