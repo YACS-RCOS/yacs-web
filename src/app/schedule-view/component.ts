@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
-import { Course } from '../course-list/course/course';
-import { Section } from '../course-list/section/section';
-import { Schedule} from './schedule/schedule';
-import { ScheduleEvent } from './schedule-event/schedule-event';
+import { Course } from '../models/course.model';
+import { Section } from '../models/section.model';
+import { Schedule} from '../models/schedule.model';
+import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
@@ -89,7 +89,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
             color:     color,
             startTime: this.toMinutes(period.start),
             endTime:   this.toMinutes(period.end),
-            title:     `${section.department_code} ${section.course_number} - ${section.name}`
+            title:     `${section.department_code} ${section.course_number} - ${section.name}`,
+            location: period.location
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
@@ -160,5 +161,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
         .catch(function(error) {
           console.error('oops, something went wrong!', error);
         });
+  }
+
+  public clear (): void {
+    this.selectionService.clear();
   }
 }

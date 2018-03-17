@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Course } from './course';
-import { Section } from '../section/section';
+import { Course } from '../../models/course.model';
+import { Section } from '../../models/section.model';
 import { SelectionService } from '../../services/selection.service'
 import { ConflictsService } from '../../services/conflicts.service';
 
@@ -32,6 +32,16 @@ export class CourseComponent {
       }
     }
     return outstr;
+  }
+
+  // TODO: This should just return course.department_code.
+  // That field needs to be added to the API
+  public subjectCode() {
+    if (this.course.sections && this.course.sections[0]) {
+      return this.course.sections[0].department_code;
+    } else {
+      return "";
+    }
   }
 
   public clickCourse(course : Course) {
