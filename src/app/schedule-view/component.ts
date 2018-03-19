@@ -94,7 +94,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
-        ++color;
+        if (color >= Schedule.COLORS.length-1){
+          color = 0;
+        }
+        else{
+          color++
+        }
       }
       allScheduleEvents.push(scheduleEvents);
       allStatusTexts.push(`CRNs: ${crns.join(',')}`);
@@ -166,4 +171,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
   public clear (): void {
     this.selectionService.clear();
   }
+}
+
+@Component({
+  selector: 'ngbd-export-component',
+  templateUrl: './component.html'
+})
+export class NgbdExportComponent {
 }
