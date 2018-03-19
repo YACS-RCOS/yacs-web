@@ -23,7 +23,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
   schedules: Schedule[] = [];
   scheduleIndex: number = 0;
   isTemporary: boolean = false;
-  isExporting: boolean = false;
 
   private subscription;
 
