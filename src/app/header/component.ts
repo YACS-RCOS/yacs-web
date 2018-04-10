@@ -43,7 +43,7 @@ export class HeaderComponent {
         this.yacsService
           .get('courses', { search: term })
           .then(data => {
-            if (term.length > 2 && /\S/.test(term)) {                      //only show results after 3 characters
+            if (term.length > 2 && /\S/.test(term)) {   //only show results after 3 characters
               let courses = (data['courses'] as Course[])
                 .map(c => c.name);
               return courses
@@ -55,7 +55,7 @@ export class HeaderComponent {
           }))
 
   //function for on-click typeahead bar
-  selectedCourse($event: any) {
+  selectCourse($event: any) {
     this.router.navigate(['/courses'],
       { queryParams: {
         name: $event.item
