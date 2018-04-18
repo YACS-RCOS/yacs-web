@@ -5,6 +5,13 @@ import { TestBed, fakeAsync, tick, ComponentFixture, async } from '@angular/core
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead.module';
+import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-config';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -46,7 +53,7 @@ class YacsServiceMock {
     return Promise.resolve(json_data);
   }
 }   
-
+  
 describe("Testing header component", function() {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
@@ -81,38 +88,81 @@ describe("Testing TypeAhead Search Bar", function() {
   let fixture: ComponentFixture<HeaderComponent>;
   let de: DebugElement;
   let element: HTMLElement;
+  let location: Location;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-       providers: [ YacsService, { provide: Router, useValue: mockRouter } ],
-       declarations: [ HeaderComponent, Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent ]
+      imports: [NgbModule.forRoot(), NgbTypeaheadModule.forRoot()],
+      providers: [
+        { provide: YacsService, useClass: YacsServiceMock },
+        { provide: Router, useValue: mockRouter }
+      ],
+      declarations: [ HeaderComponent, Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
+    mockRouter.initialNavigation();
 
-    de = fixture.debugElement.query(By.css('nav'));
-    element  = de.nativeElement;
+    component = fixture.componentInstance;
+    location = TestBed.get(Location);
   }));
 
   //Test Search
-  it('Should navigate to correct URL', function() {
-    expect(component.search("Mock"))
-  })
+  it('Should navigate to correct URL', fakeAsync(() => {
+
+    mockRouter.navigate(['Mock']);
+    tick();
+    expect(location.path()).toBe('/courses?search=Mock');
+
+    mockRouter.navigate(['Graph Theory']);
+    tick();
+    expect(location.path()).toBe('/courses?search=Graph Theory');
+  }));
+
+  //gets search bar drop down as array
+  function getWindowLinks(element: DebugElement): DebugElement[] {
+    return Array.from(element.queryAll(By.css('button.dropdown-item')));
+  }
 
   //Test searchAhead
-  it('should display correct dropdown on enter', function () {
-    expect(component.searchAhead("Mock").length).toEqual(10);
-    for (i : number = 0; i < 10; i++) {
-      expect(component.searchAhead("Mock").length).toContain("Mock Course " + i);
+  it('should display correct dropdown', fakeAsync(() => {
+
+    const searchBarHTML = fixture.debugElement.query(By.css('#searchbar')).nativeElement;
+    searchBarHTML.value = "Mock";
+    fixture.detectChanges();
+
+    tick(300);
+
+    let dropDown: DebugElement[] = getWindowLinks(fixture.debugElement);
+
+    //test if drop down has correct elements
+    for (let i = 0; i < 10; i++) {
+      let num: number = i+1;
+      expect(dropDown[i].nativeElement.textContent).toEqual("Mock Course " + num.toString());  
     }
 
-  expect(component.searchAhead("Mock").length).not.toContain("Mock Course 11");
-  expect(component.searchAhead("Mock").length).not.toContain("Mock Course 12");
+    expect(dropDown[10].nativeElement.textContent).not.toEqual("Mock Course 11"); 
+    expect(dropDown[11].nativeElement.textContent).not.toEqual("Mock Course 12"); 
 
-  expect(component.searchAhead("Graph").length).toEqual(1);
-  expect(component.searchAhead("Graph").length).toContain("Graph Theory");
-  })
+      
+    //test if click navigates to correct page
+    // dropDown[0].triggerEventHandler('click', {});
+    // fixture.detectChanges();
+
+    // tick(300);
+
+
+
+  //   for (let i : number = 0; i < 10; i++) {
+  //     expect(component.searchAhead("Mock")).toContain("Mock Course " + i);
+  //   }
+
+  // expect(component.searchAhead("Mock").length).not.toContain("Mock Course 11");
+  // expect(component.searchAhead("Mock").length).not.toContain("Mock Course 12");
+
+  // expect(component.searchAhead("Graph").length).toEqual(1);
+  // expect(component.searchAhead("Graph").length).toContain("Graph Theory");
+  }))
 
   //Test selectCourse
   it('should navigate to correct URL on dropdown click', function () {
