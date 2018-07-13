@@ -19,6 +19,8 @@
           </schedule-event>
         <div class="grid-hour" *ngFor="let hourNum of schedule.hourNums"
           [style.height.%] = "getHourHeight" >
+          <div class="grid-half-hour"></div>
+          <div class="grid-half-hour"></div>
         </div>
       </ng-container>
     </div>
