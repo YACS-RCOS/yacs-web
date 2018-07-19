@@ -179,12 +179,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
       this.excludedCells[i] = {};
       for (let j of Schedule.getHourNums(this.earliestStart, this.latestEnd)) {
         this.excludedCells[i][j] = {
-          first: true,
+          first: false,
           second: false
         }
       }
     }
-    console.log(this.excludedCells);
   }
 
   ngAfterViewInit() {

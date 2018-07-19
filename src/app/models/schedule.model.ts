@@ -50,7 +50,7 @@ export class Schedule {
     this.hourNums = Schedule.getHourNums(this.earliestStart, this.latestEnd);
   }
 
-  public static getDayNums(earliestDay = 1, latestDay = 5): number[] {
+  public static getDayNums(earliestDay: number = 1, latestDay: number = 5): number[] {
     let dayNums = [];
     for (let i = earliestDay; i <= latestDay; ++i) {
       dayNums.push(i);
@@ -58,7 +58,7 @@ export class Schedule {
     return dayNums;
   }
 
-  public static getHourNums(earliestStart, latestEnd): number[] {
+  public static getHourNums(earliestStart: number, latestEnd: number): number[] {
     let hourNums = [];
     for (let i = earliestStart; i < latestEnd; i += 60) {
       hourNums.push(i);
