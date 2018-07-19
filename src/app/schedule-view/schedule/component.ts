@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
 import { ScheduleEvent } from '../../models/schedule-event.model';
 import { Schedule } from '../../models/schedule.model';
@@ -22,6 +22,9 @@ export class ScheduleComponent implements AfterViewInit {
   @ViewChild('mySchedule')
   public mySchedule:ElementRef
   public scheduleNode;
+
+  @Input() excludedCells: object;
+  @Output() excludedCellsChange = new EventEmitter<object>();
 
   // this uses constants - inject the constants service
   constructor(constants: ConstantsService) {

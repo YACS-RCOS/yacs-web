@@ -52,20 +52,6 @@
   border-right: none;
 }
 
-.grid-half-hour {
-  display: block;
-  box-sizing: border-box;
-  height: 50%;
-}
-
-.grid-half-hour:hover {
-  background-color: #bbb;
-}
-
-.grid-half-hour.disabled {
-  background-color: #777;
-}
-
 schedule-event {
   display: block;
   box-sizing: border-box;

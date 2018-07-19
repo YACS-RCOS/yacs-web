@@ -23,6 +23,6 @@
       {{ statusText() }}
     </div>
   </div>
-  <schedule [schedule]="schedules[scheduleIndex]" *ngIf="schedules.length > 0"></schedule>
+  <schedule [schedule]="currentSchedule()" [(excludedCells)]="this.excludedCells" *ngIf="schedules.length > 0"></schedule>
   <course-list [courses]="courses"></course-list>
 </div>

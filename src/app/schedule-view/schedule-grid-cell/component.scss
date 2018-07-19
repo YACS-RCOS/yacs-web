@@ -1,0 +1,28 @@
+.grid-half-hour {
+  display: block;
+  box-sizing: border-box;
+  height: 50%;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.grid-half-hour > div {
+  visibility: hidden;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.grid-half-hour:hover {
+  background-color: #bbb;
+}
+
+.grid-half-hour:hover > div {
+  visibility: visible;
+  user-select: none;
+}
+
+.grid-half-hour.excluded {
+  background-color: #777;
+}
+

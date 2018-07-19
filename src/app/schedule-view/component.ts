@@ -26,9 +26,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   schedules: Schedule[] = [];
   scheduleIndex: number = 0;
   isTemporary: boolean = false;
+  excludedCells: object = {};
   scheduleNode;
 
   private subscription;
+  earliestStart: number = 480;
+  latestEnd: number = 1320;
 
   constructor (
     private yacsService : YacsService,
@@ -38,6 +41,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscription = this.selectionService.subscribe(() => {
       this.getSchedules();
     });
+    this.initializeExcludedCells();
   }
 
   ngOnDestroy () {
@@ -48,7 +52,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     const sectionIds = this.selectionService.getSelectedSectionIds();
     this.isLoaded = false;
     this.yacsService
-      .get('schedules', { section_ids: sectionIds.join(','), show_periods: true })
+      .get('schedules', { section_ids: sectionIds.join(','), show_periods: true, excluded_cells: JSON.stringify(this.excludedCells) })
       .then((data) => {
         this.schedules = this.processSchedules(data['schedules']);
         this.isLoaded = true;
@@ -73,9 +77,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const allScheduleEvents: ScheduleEvent[][] = [];
     const allStatusTexts: string[] = [];
-
-    let earliestStart = 480;
-    let latestEnd = 1320;
 
     for (let schedule of rawSchedules) {
       const sections = schedule['sections'] as Section[];
@@ -110,8 +111,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const schedules: Schedule[] = [];
     for (let i in allScheduleEvents) {
-      schedules.push(new Schedule(allScheduleEvents[i], earliestStart, latestEnd, allStatusTexts[i]));
+      schedules.push(new Schedule(allScheduleEvents[i], this.earliestStart, this.latestEnd, allStatusTexts[i]));
     }
+
     return schedules;
   }
 
@@ -169,6 +171,20 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public clear (): void {
     this.selectionService.clear();
+  }
+
+  initializeExcludedCells(): void {
+    this.excludedCells = {};
+    for (let i of Schedule.getDayNums()) {
+      this.excludedCells[i] = {};
+      for (let j of Schedule.getHourNums(this.earliestStart, this.latestEnd)) {
+        this.excludedCells[i][j] = {
+          first: true,
+          second: false
+        }
+      }
+    }
+    console.log(this.excludedCells);
   }
 
   ngAfterViewInit() {
