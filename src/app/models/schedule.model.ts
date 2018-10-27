@@ -46,15 +46,24 @@ export class Schedule {
     
     this.percents = [480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140];
 
-    this.dayNums = [];
-    for(let i=this.earliestDay; i<=this.latestDay; ++i) {
-      this.dayNums.push(i);
+    this.dayNums = Schedule.getDayNums(this.earliestDay, this.latestDay);
+    this.hourNums = Schedule.getHourNums(this.earliestStart, this.latestEnd);
+  }
+
+  public static getDayNums(earliestDay: number = 1, latestDay: number = 5): number[] {
+    let dayNums = [];
+    for (let i = earliestDay; i <= latestDay; ++i) {
+      dayNums.push(i);
     }
-    this.hourNums = [];
-    console.log(latestEnd);
-    for(let i=this.earliestStart; i<this.latestEnd; i+=60) {
-      this.hourNums.push(i);
+    return dayNums;
+  }
+
+  public static getHourNums(earliestStart: number, latestEnd: number): number[] {
+    let hourNums = [];
+    for (let i = earliestStart; i < latestEnd; i += 60) {
+      hourNums.push(i);
     }
+    return hourNums;
   }
 
   /* Return the total number of days in the schedule. */

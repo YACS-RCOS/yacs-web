@@ -19,6 +19,8 @@
           </schedule-event>
         <div class="grid-hour" *ngFor="let hourNum of schedule.hourNums"
           [style.height.%] = "getHourHeight" >
+          <schedule-grid-cell [(excluded)]="excludedCells[dayNum][hourNum].first"></schedule-grid-cell>
+          <schedule-grid-cell [(excluded)]="excludedCells[dayNum][hourNum].second"></schedule-grid-cell>
         </div>
       </ng-container>
     </div>
