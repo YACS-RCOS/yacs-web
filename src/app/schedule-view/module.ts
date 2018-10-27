@@ -11,7 +11,6 @@ import { ScheduleGridCellComponent } from './schedule-grid-cell/component';
 
 //import { YacsService } from '../services/yacs.service';
 
-import { CourseListModule } from '../course-list/module';
 //import { CourseComponent } from '../course-list/course/component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,10 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     NgbModule,
-    CommonModule,
-    CourseListModule
-    //CourseComponent
-    //RouterModule
+    CommonModule
   ],
   providers: [],
   //providers: [YacsService],
